@@ -1,0 +1,161 @@
+/**
+ * Core Philosophy: This ruleset enforces a strict user-ownership model for private data,
+ * while allowing public read access for shared educational content. The design prioritizes
+ * security and performance by segregating private user data (profiles, progress, quiz results)
+ * into a user-specific data tree, which eliminates the need for costly cross-document reads
+ * in security rules.
+ *
+ * Data Structure:
+ * - /users/{userId}: Stores public user profiles. Read by any signed-in user, written only by the owner.
+ * - /users/{userId}/progress/{progressId}: Stores a user's private course progress. Strictly owner-only access.
+ * - /users/{userId}/quiz_results/{quizResultId}: Stores a user's private quiz results. Strictly owner-only access.
+ * - /courses/{courseId}: Stores publicly available course information. Readable by anyone.
+ * - /courses/{courseId}/quizzes/{quizId}: Stores quizzes for public courses. Readable by anyone.
+ *
+ * Key Security Decisions:
+ * - Default Deny: All paths are closed by default. Access is granted on a per-collection basis.
+ * - User Data Privacy: A user's progress and quiz results are stored in subcollections under their
+ *   own user document, making it impossible for other users to access or even list this sensitive data.
+ * - Public Content: Courses and quizzes are globally readable to allow any user (including unauthenticated ones)
+ *   to browse the platform's offerings. Client-side writes to these collections are disabled to ensure
+ *   content is only managed by a trusted backend (e.g., Admin SDK).
+ * - No User Listing: Listing the entire `/users` collection is disallowed to protect user privacy
+ *   and prevent data scraping.
+ *
+ * Denormalization for Authorization:
+ * The security model relies heavily on path-based ownership. For documents in user-specific subcollections
+ * (e.g., /users/{userId}/progress/{progressId}), an internal `userId` field is also required. This
+ * denormalized field is validated against the path on creation and made immutable on update, ensuring
+ * a permanent and unchangeable link between the data and its owner.
+ *
+ * Structural Segregation:
+ * The ruleset leverages a clear separation between private and public data. Private, user-owned data
+ * lives under `/users/{userId}`, while public, read-only content like `/courses` exists at the top level.
+ * This segregation simplifies rules and makes list operations highly secure and performant.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ----------------------------------------------------------------------
+    // Helper Functions
+    // ----------------------------------------------------------------------
+
+    /**
+     * Returns true if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Returns true if the authenticated user's UID matches the provided userId.
+     * This is the core function for validating document ownership.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * Returns true if the user is the owner and the document already exists.
+     * Used for secure update and delete operations.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    // ----------------------------------------------------------------------
+    // User Collections
+    // ----------------------------------------------------------------------
+
+    /**
+     * @description Manages user profiles. A user can create their own profile, but
+     *   cannot see a list of all users. Any signed-in user can view a specific profile.
+     * @path /users/{userId}
+     * @allow (create) a new user creating their own profile document: `create /users/user_abc` where `auth.uid == 'user_abc'`.
+     * @deny (create) a user trying to create a profile for someone else: `create /users/user_xyz` where `auth.uid == 'user_abc'`.
+     * @deny (list) any user trying to list all profiles: `list /users`.
+     * @principle Enforces Self-Creation and Ownership for writes, while preventing user enumeration.
+     */
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow list: if false;
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Tracks a user's progress in courses. Access is strictly limited
+     *   to the user who owns the data.
+     * @path /users/{userId}/progress/{progressId}
+     * @allow (create) a user creating a progress document for themselves: `create /users/user_abc/progress/p123` where `auth.uid == 'user_abc'`.
+     * @allow (get) a user fetching their own progress: `get /users/user_abc/progress/p123` where `auth.uid == 'user_abc'`.
+     * @deny (get) a user trying to read another user's progress: `get /users/user_xyz/progress/p456` where `auth.uid == 'user_abc'`.
+     * @principle Restricts access to a user's own private data tree using path-based ownership.
+     */
+    match /users/{userId}/progress/{progressId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Stores a user's quiz results. Access is strictly limited to the
+     *   user who owns the data.
+     * @path /users/{userId}/quiz_results/{quizResultId}
+     * @allow (create) a user submitting a quiz result: `create /users/user_abc/quiz_results/qr123` where `auth.uid == 'user_abc'`.
+     * @allow (list) a user listing all their past quiz results: `list /users/user_abc/quiz_results` where `auth.uid == 'user_abc'`.
+     * @deny (update) a user trying to modify another user's score: `update /users/user_xyz/quiz_results/qr456` where `auth.uid == 'user_abc'`.
+     * @principle Restricts access to a user's own private data tree using path-based ownership.
+     */
+    match /users/{userId}/quiz_results/{quizResultId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.userId == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    // ----------------------------------------------------------------------
+    // Public Content Collections.
+    // ----------------------------------------------------------------------
+
+    /**
+     * @description Manages course information. All course data is public and can be
+     *   read by anyone, including unauthenticated users. Writes are disabled for clients.
+     * @path /courses/{courseId}
+     * @allow (get) any user, signed in or not, fetching a course: `get /courses/course123`.
+     * @allow (list) any user, signed in or not, listing all courses: `list /courses`.
+     * @deny (create) any client trying to add a new course: `create /courses/course456`.
+     * @principle Defines a public, read-only collection for globally shared content. Writes must be done via a trusted server environment.
+     */
+    match /courses/{courseId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Manages quizzes associated with courses. All quiz data is public
+     *   and can be read by anyone. Writes are disabled for clients.
+     * @path /courses/{courseId}/quizzes/{quizId}
+     * @allow (get) any user, signed in or not, fetching a quiz: `get /courses/course123/quizzes/quiz_abc`.
+     * @allow (list) any user listing quizzes for a course: `list /courses/course123/quizzes`.
+     * @deny (update) any client trying to modify a quiz: `update /courses/course123/quizzes/quiz_abc`.
+     * @principle Defines a public, read-only subcollection. Inherits public readability from its parent.
+     */
+    match /courses/{courseId}/quizzes/{quizId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+  }
+}

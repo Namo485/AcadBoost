@@ -1,0 +1,154 @@
+{
+  "placeholderImages": [
+    {
+      "id": "python",
+      "description": "Python programming",
+      "imageUrl": "https://images.unsplash.com/photo-1632251141959-40b21a6c118c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjb2RlJTIwdGVjaG5vbG9neXxlbnwwfHx8fDE3NjY2MTk2Mjh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "code technology"
+    },
+    {
+      "id": "calculus",
+      "description": "Calculus formulas",
+      "imageUrl": "https://images.unsplash.com/photo-1758685734312-5134968399a8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaGFsa2JvYXJkJTIwbWF0aHxlbnwwfHx8fDE3NjY3MzI1Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "chalkboard math"
+    },
+    {
+      "id": "art",
+      "description": "Art history collage",
+      "imageUrl": "https://images.unsplash.com/photo-1632127257703-0cf673d29050?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwYWludGluZyUyMG11c2V1bXxlbnwwfHx8fDE3NjY3MzI1Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "painting museum"
+    },
+    {
+      "id": "machine-learning",
+      "description": "Machine learning diagram",
+      "imageUrl": "https://images.unsplash.com/photo-1738082956213-aa554ba67bda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxuZXR3b3JrJTIwZGF0YXxlbnwwfHx8fDE3NjY2NzIwMjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "network data"
+    },
+    {
+      "id": "writing",
+      "description": "Person writing in a notebook",
+      "imageUrl": "https://images.unsplash.com/photo-1594997652537-2e2dce4ebf28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3cml0aW5nJTIwbm90ZWJvb2t8ZW58MHx8fHwxNzY2NzMyNTc4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "writing notebook"
+    },
+    {
+      "id": "dsa",
+      "description": "Data structures visualization",
+      "imageUrl": "https://images.unsplash.com/photo-1739289043267-7dddee926faa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxmbG93Y2hhcnQlMjBub2Rlc3xlbnwwfHx8fDE3NjY3MzI1Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "flowchart nodes"
+    },
+    {
+      "id": "algebra",
+      "description": "Linear algebra graph",
+      "imageUrl": "https://images.unsplash.com/photo-1664526936810-ec0856d31b92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxncmFwaCUyMG1hdHJpeHxlbnwwfHx8fDE3NjY3MzI1Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "graph matrix"
+    },
+    {
+      "id": "photography",
+      "description": "Camera and photos",
+      "imageUrl": "https://images.unsplash.com/photo-1608186286925-8c0e1c1fbeac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjYW1lcmElMjBsZW5zfGVufDB8fHx8MTc2NjY1ODkxMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "camera lens"
+    },
+    {
+      "id": "user",
+      "description": "User avatar",
+      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwZXJzb24lMjBmYWNlfGVufDB8fHx8MTc2NjY4ODUyN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person face"
+    },
+    {
+      "id": "cpp",
+      "description": "C++ code on a screen",
+      "imageUrl": "https://images.unsplash.com/photo-1753998943619-b9cd910887e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjb2RlJTIwbGFuZ3VhZ2V8ZW58MHx8fHwxNzY2ODY2MTUzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "code language"
+    },
+    {
+      "id": "java",
+      "description": "Java code on a screen",
+      "imageUrl": "https://images.unsplash.com/photo-1529429612779-c8e40ef2f36d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb2RlJTIwc2NyZWVufGVufDB8fHx8MTc2NjgwMTg3OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "code screen"
+    },
+    {
+      "id": "html",
+      "description": "HTML tags on a screen",
+      "imageUrl": "https://images.unsplash.com/photo-1546464033-5b15cf1168f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx3ZWIlMjBjb2RlfGVufDB8fHx8MTc2Njg1MzIyOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "web code"
+    },
+    {
+      "id": "css",
+      "description": "CSS code for styling",
+      "imageUrl": "https://images.unsplash.com/photo-1504812445817-cb3d4f235a14?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzdHlsaW5nJTIwY29kZXxlbnwwfHx8fDE3NjY4NjYxNTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "styling code"
+    },
+    {
+      "id": "javascript",
+      "description": "JavaScript code block",
+      "imageUrl": "https://images.unsplash.com/photo-1765285262690-36b8ed16d41f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzY3JpcHRpbmclMjBsYW5ndWFnZXxlbnwwfHx8fDE3NjY4NjYxNTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "scripting language"
+    },
+    {
+      "id": "react",
+      "description": "React logo",
+      "imageUrl": "https://images.unsplash.com/photo-1683321952153-9756299f0c9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmcm9udGVuZCUyMGZyYW1ld29ya3xlbnwwfHx8fDE3NjY4NjYxNTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "frontend framework"
+    },
+    {
+      "id": "ai-tools",
+      "description": "Abstract AI graphic",
+      "imageUrl": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDB8fHx8MTc2Njc3NDM5OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "artificial intelligence"
+    },
+    {
+      "id": "frontend",
+      "description": "Web browser showing a website",
+      "imageUrl": "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3ZWIlMjBkZXNpZ258ZW58MHx8fHwxNzY2ODAyMTA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "web design"
+    },
+    {
+      "id": "backend",
+      "description": "Server racks in a data center",
+      "imageUrl": "https://images.unsplash.com/photo-1667372459534-848ec00d4da7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzZXJ2ZXIlMjBkYXRhYmFzZXxlbnwwfHx8fDE3NjY4MjQxNTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "server database"
+    },
+    {
+      "id": "full-stack",
+      "description": "Code on screen with database icon",
+      "imageUrl": "https://images.unsplash.com/photo-1620313925071-c14400e4f548?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkZXZlbG9wbWVudCUyMHN0YWNrfGVufDB8fHx8MTc2Njg2NjE1M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "development stack"
+    },
+    {
+      "id": "ui-ux",
+      "description": "Wireframes for a mobile app",
+      "imageUrl": "https://images.unsplash.com/photo-1624066969605-506986184108?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkZXNpZ24lMjBwcm90b3R5cGV8ZW58MHx8fHwxNzY2ODY2MTUzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "design prototype"
+    },
+    {
+      "id": "cloud",
+      "description": "Cloud computing illustration",
+      "imageUrl": "https://images.unsplash.com/photo-1721444127971-b7d0023bbef2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjbG91ZCUyMGhvc3Rpbmd8ZW58MHx8fHwxNzY2ODI0ODIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cloud hosting"
+    },
+    {
+      "id": "blockchain",
+      "description": "Blockchain network diagram",
+      "imageUrl": "https://images.unsplash.com/photo-1626163015484-81fc7e3b90d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjcnlwdG8lMjB0ZWNobm9sb2d5fGVufDB8fHx8MTc2NjgwNjIwOHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "crypto technology"
+    },
+    {
+      "id": "android",
+      "description": "Android robot logo",
+      "imageUrl": "https://images.unsplash.com/photo-1633250391894-397930e3f5f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtb2JpbGUlMjBkZXZlbG9wbWVudHxlbnwwfHx8fDE3NjY4NjMyNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mobile development"
+    },
+    {
+      "id": "linkedin",
+      "description": "LinkedIn logo",
+      "imageUrl": "https://images.unsplash.com/photo-1762340274927-10521ccdefdb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBuZXR3b3JrfGVufDB8fHx8MTc2Njg2NjE1M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional network"
+    },
+    {
+      "id": "github",
+      "description": "GitHub Octocat logo",
+      "imageUrl": "https://images.unsplash.com/photo-1649451844931-57e22fc82de3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjb2RlJTIwcmVwb3NpdG9yeXxlbnwwfHx8fDE3NjY4NjYxNTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "code repository"
+    }
+  ]
+}

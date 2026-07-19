@@ -1,0 +1,310 @@
+
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user in the AcadBoost application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "User's full name."
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email address.",
+          "format": "email"
+        },
+        "profilePhotoUrl": {
+          "type": "string",
+          "description": "URL of the user's profile photo, stored externally.",
+          "format": "uri"
+        },
+        "address": {
+          "type": "string",
+          "description": "User's physical address."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "User's phone number."
+        },
+        "timeSpent": {
+            "type": "number",
+            "description": "Total time spent by the user in the application, in seconds."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "email"
+      ]
+    },
+    "Course": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Course",
+      "type": "object",
+      "description": "Represents a course offered on the AcadBoost platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the course entity."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the course."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the course content."
+        },
+        "resourceUrl": {
+          "type": "string",
+          "description": "URL to access the course resources.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "resourceUrl"
+      ]
+    },
+    "Quiz": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Quiz",
+      "type": "object",
+      "description": "Represents a quiz available to users.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the quiz entity."
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Reference to Course. (Relationship: Course 1:N Quiz)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the quiz."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the quiz."
+        }
+      },
+      "required": [
+        "id",
+        "courseId",
+        "title"
+      ]
+    },
+    "UserProgress": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProgress",
+      "type": "object",
+      "description": "Represents a user's progress in a specific course.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user progress entity, typically the same as courseId."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N UserProgress)"
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Reference to Course. (Relationship: Course 1:N UserProgress)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the course, denormalized for easy display."
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of the course, denormalized for easy display."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Image ID for the course, denormalized for easy display."
+        },
+        "progress": {
+            "type": "number",
+            "description": "Percentage of the course completed by the user."
+        },
+        "lastAccessed": {
+          "type": "string",
+          "description": "Last date and time the user accessed the course.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "courseId",
+        "lastAccessed",
+        "title",
+        "category",
+        "imageUrl",
+        "progress"
+      ]
+    },
+    "QuizResult": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "QuizResult",
+      "type": "object",
+      "description": "Represents the result of a user taking a quiz.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the quiz result entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N QuizResult)"
+        },
+        "quizId": {
+          "type": "string",
+          "description": "Reference to Quiz. (Relationship: Quiz 1:N QuizResult)"
+        },
+        "score": {
+          "type": "number",
+          "description": "The user's score on the quiz."
+        },
+        "submissionTime": {
+          "type": "string",
+          "description": "Date and time the quiz was submitted.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "quizId",
+        "score",
+        "submissionTime"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "google.com"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profile information. Path-based ownership for security. Includes standard user profile data: name, email, and profilePhotoUrl.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/courses/{courseId}",
+        "definition": {
+          "entityName": "Course",
+          "schema": {
+            "$ref": "#/backend/entities/Course"
+          },
+          "description": "Stores course information, including title, description, and resource URL.",
+          "params": [
+            {
+              "name": "courseId",
+              "description": "The unique identifier of the course."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/courses/{courseId}/quizzes/{quizId}",
+        "definition": {
+          "entityName": "Quiz",
+          "schema": {
+            "$ref": "#/backend/entities/Quiz"
+          },
+          "description": "Stores quizzes related to a specific course. Organized as a subcollection under courses.",
+          "params": [
+            {
+              "name": "courseId",
+              "description": "The unique identifier of the course."
+            },
+            {
+              "name": "quizId",
+              "description": "The unique identifier of the quiz."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/progress/{progressId}",
+        "definition": {
+          "entityName": "UserProgress",
+          "schema": {
+            "$ref": "#/backend/entities/UserProgress"
+          },
+          "description": "Tracks user progress in courses. Organized as a subcollection under users for path-based ownership. The progressId should be the courseId to ensure uniqueness.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "progressId",
+              "description": "The unique identifier of the user progress, which is the courseId."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/quiz_results/{quizResultId}",
+        "definition": {
+          "entityName": "QuizResult",
+          "schema": {
+            "$ref": "#/backend/entities/QuizResult"
+          },
+          "description": "Stores quiz results for each user. Organized as a subcollection under users for path-based ownership.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "quizResultId",
+              "description": "The unique identifier of the user's quiz result."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore data structure is designed to support the AcadBoost application's requirements for user authentication, course management, progress tracking, and personalized learning experiences. It prioritizes authorization independence and efficient data retrieval.  \n\n**Authorization Independence and QAPs:**  Authorization independence is achieved by using path-based ownership for private user data (e.g., UserProgress, QuizResult), eliminating the need for `get()` calls in security rules.  This also improves the feasibility of atomic operations and facilitates robust security rules. Structural segregation, achieved by placing user-specific data under `/users/{userId}`, enables secure list operations (QAPs) since listing can be scoped to the authenticated user's data.\n\n**Explanation of the Structure:**\n\n*   **/users/{userId}**: This collection stores user profiles.  Path-based ownership ensures that only the authenticated user (or an admin, if roles are implemented) can access their own profile data.\n*   **/courses/{courseId}**:  This collection stores course information.  Access to courses can be public (for listing available courses) or restricted based on user roles (if certain courses are only available to specific user groups. This is not specified in requirements).\n*   **/courses/{courseId}/quizzes/{quizId}**: This subcollection stores quizzes associated with a specific course. Nesting quizzes under courses enables efficient retrieval of quizzes for a given course.\n*   **/users/{userId}/progress/{progressId}**:  This subcollection tracks a user's progress in specific courses. The progressId should be generated to guarantee uniqueness. Nesting progress under users ensures only the specific user can access to their own data.\n*   **/users/{userId}/quiz_results/{quizResultId}**:  This subcollection stores the results of quizzes taken by a user.  Nesting results under users ensures only the user can access their own quiz results.\n\nThis structure supports the core features of AcadBoost, including user authentication, personalized dashboards, progress tracking, course offerings, quizzes, and performance analysis. The path-based ownership model ensures data privacy and security, while the denormalized data facilitates efficient querying and data retrieval."
+  },
+  "storage": {
+    "rules": [
+      {
+        "path": "/profilePhotos/{userId}",
+        "access": {
+          "read": "if true;",
+          "write": "if request.auth != null && request.auth.uid == userId;"
+        },
+        "description": "Profile photos are public, but only the owner can upload/update their own photo."
+      }
+    ]
+  }
+}
